@@ -1,4 +1,4 @@
-#include "secrets.h"
+#include "secrets.h" //ลบบรรทัดนี้
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
