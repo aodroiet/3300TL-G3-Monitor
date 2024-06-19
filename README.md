@@ -13,13 +13,13 @@
 ## รูปภาพ
 
 ![alt text](img/1.jpg)
-![alt text](img/2.jpg)
+![alt text](img/2.png)
 
 
 
 ## แผนภาพการเชื่อมต่อ
 
-![alt text](img/3.jpg)
+![alt text](img/3.png)
 
 
 ## ใบอนุญาต
