@@ -31,12 +31,6 @@ const char MAIN_page[] PROGMEM = R"=====(
             background: linear-gradient(135deg, hsla(236.6, 0%, 53.52%, 1) 0, hsla(236.6, 0%, 53.52%, 0) 70%), linear-gradient(25deg, hsla(220.75, 34.93%, 26.52%, 1) 10%, hsla(220.75, 34.93%, 26.52%, 0) 80%), linear-gradient(315deg, hsla(46.42, 36.62%, 83.92%, 1) 15%, hsla(46.42, 36.62%, 83.92%, 0) 80%), linear-gradient(245deg, hsla(191.32, 50.68%, 56.45%, 1) 100%, hsla(191.32, 50.68%, 56.45%, 0) 70%);
         }
 
-        .ie-fixMinHeight {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-        }
-
         .main {
             min-height: calc(100vh - 90px);
             width: 100%;
@@ -112,74 +106,71 @@ const char MAIN_page[] PROGMEM = R"=====(
 </head>
 
 <body>
-    <div class="ie-fixMinHeight">
-        <div class="main">
-            <div class="wrap">
-                <h1>SOFAR 3.3KTL-G3</h1>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>PV Voltage</td>
-                            <td><span id="PV_Voltage"></span> V</td>
-                        </tr>
-                        <tr>
-                            <td>PV Current</td>
-                            <td><span id="PV_Current"></span> A</td>
-                        </tr>
-                        <tr>
-                            <td>PV Power</td>
-                            <td><span id="PV_Power"></span> kW</td>
-                        </tr>
-                        <tr>
-                            <td>Bus Voltage</td>
-                            <td><span id="Bus_Voltage"></span> V</td>
-                        </tr>
-                        <tr>
-                            <td>AC Voltage</td>
-                            <td><span id="AC_Voltage"></span> V</td>
-                        </tr>
-                        <tr>
-                            <td>AC Current</td>
-                            <td><span id="AC_Current"></span> A</td>
-                        </tr>
-                        <tr>
-                            <td>Grid Frequency</td>
-                            <td><span id="Grid_Frequency"></span> Hz</td>
-                        </tr>
-                        <tr>
-                            <td>Active Power</td>
-                            <td><span id="Active_Power"></span> kW</td>
-                        </tr>
-                        <tr>
-                            <td>Reactive Power</td>
-                            <td><span id="Reactive_Power"></span> VAR</td>
-                        </tr>
-                        <tr>
-                            <td>Daily Production</td>
-                            <td><span id="Daily_Production"></span> kWh</td>
-                        </tr>
-                        <tr>
-                            <td>Total Production</td>
-                            <td><span id="Total_Production"></span> kWh</td>
-                        </tr>
-                        <tr>
-                            <td>Temperature Module</td>
-                            <td><span id="Temperature_Module"></span> °C</td>
-                        </tr>
-                        <tr>
-                            <td>Temperature Inverter</td>
-                            <td><span id="Temperature_Inverter"></span> °C</td>
-                        </tr>
-                        <tr>
-                            <td>Total Running Hour</td>
-                            <td><span id="Total_Running_Hour"></span> h</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="main">
+        <div class="wrap">
+            <h1>SOFAR 3.3KTL-G3</h1>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>PV Voltage</td>
+                        <td><span id="PV_Voltage"></span> V</td>
+                    </tr>
+                    <tr>
+                        <td>PV Current</td>
+                        <td><span id="PV_Current"></span> A</td>
+                    </tr>
+                    <tr>
+                        <td>PV Power</td>
+                        <td><span id="PV_Power"></span> kW</td>
+                    </tr>
+                    <tr>
+                        <td>Bus Voltage</td>
+                        <td><span id="Bus_Voltage"></span> V</td>
+                    </tr>
+                    <tr>
+                        <td>AC Voltage</td>
+                        <td><span id="AC_Voltage"></span> V</td>
+                    </tr>
+                    <tr>
+                        <td>AC Current</td>
+                        <td><span id="AC_Current"></span> A</td>
+                    </tr>
+                    <tr>
+                        <td>Grid Frequency</td>
+                        <td><span id="Grid_Frequency"></span> Hz</td>
+                    </tr>
+                    <tr>
+                        <td>Active Power</td>
+                        <td><span id="Active_Power"></span> kW</td>
+                    </tr>
+                    <tr>
+                        <td>Reactive Power</td>
+                        <td><span id="Reactive_Power"></span> VAR</td>
+                    </tr>
+                    <tr>
+                        <td>Daily Production</td>
+                        <td><span id="Daily_Production"></span> kWh</td>
+                    </tr>
+                    <tr>
+                        <td>Total Production</td>
+                        <td><span id="Total_Production"></span> kWh</td>
+                    </tr>
+                    <tr>
+                        <td>Temperature Module</td>
+                        <td><span id="Temperature_Module"></span> °C</td>
+                    </tr>
+                    <tr>
+                        <td>Temperature Inverter</td>
+                        <td><span id="Temperature_Inverter"></span> °C</td>
+                    </tr>
+                    <tr>
+                        <td>Total Running Hour</td>
+                        <td><span id="Total_Running_Hour"></span> h</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
     <script>
         function fetchData() {
             fetch('/data')
@@ -203,7 +194,6 @@ const char MAIN_page[] PROGMEM = R"=====(
         }
         setInterval(fetchData, 1000);
     </script>
-
 </body>
 
 </html>
