@@ -116,7 +116,7 @@ const char MAIN_page[] PROGMEM = R"=====(
         <div class="main">
             <div class="wrap">
                 <h1>SOFAR 3.3KTL-G3</h1>
-                <table id="fetchData" style="display:none">
+                <table>
                     <tbody>
                         <tr>
                             <td>PV Voltage</td>
@@ -199,7 +199,6 @@ const char MAIN_page[] PROGMEM = R"=====(
                     document.getElementById('Temperature_Module').innerText = data.Temperature_Module;
                     document.getElementById('Temperature_Inverter').innerText = data.Temperature_Inverter;
                     document.getElementById('Total_Running_Hour').innerText = data.Total_Running_Hour.toLocaleString();
-                    document.getElementById("fetchData").style.display = "table";
                 });
         }
         setInterval(fetchData, 1000);
