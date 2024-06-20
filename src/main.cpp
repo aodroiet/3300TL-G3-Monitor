@@ -43,9 +43,6 @@ struct SensorData
   uint32_t Total_Running_Hour;
 } sensorData;
 
-unsigned long previousMillis = 0;
-const long interval = 1000;
-
 void preTransmission()
 {
   digitalWrite(RTS_PIN, HIGH);
@@ -81,6 +78,37 @@ bool fetchData()
   return false;
 }
 
+void handleRoot()
+{
+  httpServer.send_P(200, "text/html", MAIN_page);
+}
+
+void handleData()
+{
+  if (fetchData())
+  {
+    String jsonResponse = "{";
+    jsonResponse += "\"Inverter_State\":" + String(sensorData.PV_Voltage) + ",";
+    jsonResponse += "\"PV_Voltage\":" + String(sensorData.PV_Voltage) + ",";
+    jsonResponse += "\"PV_Current\":" + String(sensorData.PV_Current) + ",";
+    jsonResponse += "\"PV_Power\":" + String(sensorData.PV_Power) + ",";
+    jsonResponse += "\"Bus_Voltage\":" + String(sensorData.Bus_Voltage) + ",";
+    jsonResponse += "\"AC_Voltage\":" + String(sensorData.AC_Voltage) + ",";
+    jsonResponse += "\"AC_Current\":" + String(sensorData.AC_Current) + ",";
+    jsonResponse += "\"Grid_Frequency\":" + String(sensorData.Grid_Frequency) + ",";
+    jsonResponse += "\"Active_Power\":" + String(sensorData.Active_Power) + ",";
+    jsonResponse += "\"Reactive_Power\":" + String(sensorData.Reactive_Power) + ",";
+    jsonResponse += "\"Daily_Production\":" + String(sensorData.Daily_Production) + ",";
+    jsonResponse += "\"Total_Production\":" + String(sensorData.Total_Production) + ",";
+    jsonResponse += "\"Temperature_Module\":" + String(sensorData.Temperature_Module) + ",";
+    jsonResponse += "\"Temperature_Inverter\":" + String(sensorData.Temperature_Inverter) + ",";
+    jsonResponse += "\"Total_Running_Hour\":" + String(sensorData.Total_Running_Hour);
+    jsonResponse += "}";
+    httpServer.send(200, "application/json", jsonResponse);
+    httpServer.sendHeader("Access-Control-Allow-Origin", "*");
+  }
+}
+
 void setup(void)
 {
   Serial.begin(9600);
@@ -109,31 +137,8 @@ void setup(void)
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  httpServer.on("/", HTTP_GET, []()
-                { httpServer.send_P(200, "text/html", MAIN_page); });
-
-  httpServer.on("/data", HTTP_GET, []()
-                {
-    String jsonResponse = "{";
-    jsonResponse += "\"Inverter_State\":" + String(sensorData.PV_Voltage) + ",";
-    jsonResponse += "\"PV_Voltage\":" + String(sensorData.PV_Voltage) + ",";
-    jsonResponse += "\"PV_Current\":" + String(sensorData.PV_Current) + ",";
-    jsonResponse += "\"PV_Power\":" + String(sensorData.PV_Power) + ",";
-    jsonResponse += "\"Bus_Voltage\":" + String(sensorData.Bus_Voltage) + ",";
-    jsonResponse += "\"AC_Voltage\":" + String(sensorData.AC_Voltage) + ",";
-    jsonResponse += "\"AC_Current\":" + String(sensorData.AC_Current) + ",";
-    jsonResponse += "\"Grid_Frequency\":" + String(sensorData.Grid_Frequency) + ",";
-    jsonResponse += "\"Active_Power\":" + String(sensorData.Active_Power) + ",";
-    jsonResponse += "\"Reactive_Power\":" + String(sensorData.Reactive_Power) + ",";
-    jsonResponse += "\"Daily_Production\":" + String(sensorData.Daily_Production) + ",";
-    jsonResponse += "\"Total_Production\":" + String(sensorData.Total_Production) + ",";
-    jsonResponse += "\"Temperature_Module\":" + String(sensorData.Temperature_Module) + ",";
-    jsonResponse += "\"Temperature_Inverter\":" + String(sensorData.Temperature_Inverter) + ",";
-    jsonResponse += "\"Total_Running_Hour\":" + String(sensorData.Total_Running_Hour);
-    jsonResponse += "}";
-    httpServer.send(200, "application/json", jsonResponse);
-    httpServer.sendHeader("Access-Control-Allow-Origin", "*"); });
-
+  httpServer.on("/", HTTP_GET, handleRoot);
+  httpServer.on("/data", HTTP_GET, handleData);
   httpUpdater.setup(&httpServer, "/update", update_username, update_password);
   httpServer.begin();
 }
@@ -141,10 +146,4 @@ void setup(void)
 void loop(void)
 {
   httpServer.handleClient();
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval)
-  {
-    previousMillis = currentMillis;
-    fetchData();
-  }
 }
