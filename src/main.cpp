@@ -121,17 +121,15 @@ void setup(void)
   node.preTransmission(preTransmission);
   node.postTransmission(postTransmission);
 
-  Serial.println();
-  Serial.println("Booting Sketch...");
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-  Serial.println("");
+  Serial.println();
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("");
+  Serial.println();
   Serial.print("Connected to ");
   Serial.println(ssid);
   Serial.print("IP address: ");
